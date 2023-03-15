@@ -1,0 +1,81 @@
+
+<div class="container-fluid">
+    <!-- *************************************************************** -->
+    <!-- Start First Cards -->
+    <!-- *************************************************************** -->
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-end">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h2 class="text-dark mb-1 font-weight-medium"><%= data.debtor_name_list.length %></h2>    
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">คนยืมทั้งหมด
+                            </h6>
+                        </div>
+                        <div class="ms-auto mt-md-3 mt-lg-0">
+                            <span class="opacity-7 text-primary"><i class="fa-solid fa-person fa-2x"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-end ">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><%= data.sum_amount %></h2>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">รวมเป็นเงิน</h6>
+                        </div>
+                        <div class="ms-auto mt-md-3 mt-lg-0">
+                            <span class="opacity-7 text-success"><i class="fa-solid fa-baht-sign fa-2x"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *************************************************************** -->
+    <!-- Start Top Leader Table -->
+    <!-- *************************************************************** -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <h4 class="card-title">Debtor List</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table no-wrap v-middle mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th class="border-0 font-14 font-weight-medium text-dark">ชื่อ</th>
+                                    <th class="border-0 font-14 font-weight-medium text-dark">อธิบายเพิ่มเติม</th>
+                                    <th class="border-0 font-14 font-weight-medium text-dark">ID</th>
+                                    <th class="border-0 font-14 font-weight-medium text-dark">วันที่</th>
+                                    <th class="border-0 font-14 font-weight-medium text-dark">จำนวน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.debtor.forEach(function(x){ %>
+                                    <tr>
+                                        <td><%= x.name %></td>
+                                        <td><%= x.description %></td>
+                                        <td><%= x.id %></td>
+                                        <td><%= x.date %></td>
+                                        <td><%= x.amount %> ฿</td>
+                                    </tr>
+                                <% }); %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *************************************************************** -->
+    <!-- End Top Leader Table -->
+    <!-- *************************************************************** -->
+</div>

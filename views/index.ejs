@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>ลูกหนี้ที่รัก</title>
+    <!-- Custom CSS -->
+    <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="dist/css/style.min.css" rel="stylesheet">
+    <!-- set font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&family=Sarabun&display=swap');
+        * {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+
+    <%- include("./partials/preload.ejs") %>
+
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+
+        <%- include("./partials/header.ejs") %>
+
+        <%- include("./partials/slide-bar.ejs") %>
+
+        <div class="page-wrapper">
+
+            <%- include("./partials/page-title.ejs") %>
+
+            <% if(page == "dashboard"){ %>
+                <%- include("./pages/dashboard.ejs") %>
+            <% } else if(page == "login"){ %>
+                <%- include("./pages/login.ejs") %>
+            <% } else if(page == "manage"){ %>
+                <%- include("./pages/manage.ejs") %>
+            <% } %>
+
+            <%- include("./partials/footer.ejs") %>
+
+        </div>
+
+    </div>
+
+    <%- include("./partials/scripts.ejs") %>
+</body>
+
+</html>
