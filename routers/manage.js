@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const connection = require("../database/connect.js").connection;
 const { get_ip } = require("../utils/get_ip.js");
+const bodyparser = require("body-parser");
+const urlencoded = bodyparser.urlencoded({
+    limit: "50mb",
+    extended: true,
+});
 
 router.get("/manage", async(req, res) =>{
     connection.execute('SELECT * FROM auth WHERE ip= ?', [await get_ip(req)], async(err, results, fields) =>{
@@ -35,7 +40,7 @@ async function auth_check(req){
 }
 
 
-router.post("/api/debtor/add", async(req, res) =>{
+router.post("/api/debtor/add", urlencoded, async(req, res) =>{
     connection.execute('SELECT * FROM auth WHERE ip= ?', [await get_ip(req)], async(err, results, fields) =>{
         if(results.length === 0){
             return res.redirect("/");
@@ -53,7 +58,7 @@ router.post("/api/debtor/add", async(req, res) =>{
     });
 });
 
-router.post("/api/debtor/remove", async(req, res) =>{
+router.post("/api/debtor/remove", urlencoded, async(req, res) =>{
     connection.execute('SELECT * FROM auth WHERE ip= ?', [await get_ip(req)], async(err, results, fields) =>{
         if(results.length === 0){
             return res.redirect("/");
