@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title><%= error.status %> <%= message %></title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../assets/images/404_favicon.svg">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom Font -->
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+        * {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<section class="section is-medium">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column has-text-centered">
+                <i class="fa-solid fa-link-slash fa-5x"></i>
+                <hr>
+                <h1 class="title">Error Code : <%= error.status %></h1>
+                <p class="subtitle"><%= message %></p>
+                <hr>
+                <a class="button m-3" id="back_btn"><i class="fa-solid fa-angles-left"></i>&nbsp&nbspGo Back</a>
+                <a class="button m-3" id="see_error_btn" ><i class="fa-solid fa-bug"></i>&nbsp&nbspShow Error</a>
+                <br>
+            </div>
+            <div class="column has-text-left" id="error_stack">
+                <p class="subtitle is-size-7"><%= error.stack %></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // set default display value
+    document.getElementById("error_stack").style.display = "none";
+    // click event
+    document.getElementById("see_error_btn").addEventListener("click", function(event){
+        let error_message_element = document.getElementById("error_stack");
+        if(error_message_element.style.display == "none"){
+            // show error
+            error_message_element.style.display = "inline";
+            document.getElementById("see_error_btn").innerHTML = `<i class="fa-solid fa-bug-slash"></i>&nbsp&nbspHide Error`;
+        }
+        else {
+            // hide error
+            document.getElementById("see_error_btn").innerHTML = `<i class="fa-solid fa-bug"></i>&nbsp&nbspShow Error`;
+            error_message_element.style.display = "none";
+        }
+    });
+</script>
+
+<script>
+    document.getElementById("back_btn").addEventListener("click", function(event){
+        window.history.back();
+    });
+</script>
+</body>
+</html>
