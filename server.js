@@ -49,12 +49,6 @@ fs.readdirSync("./routers").forEach(async files => {
 // database
 require("./database/connect.js").connect();
 
-/*
-server.listen(config.server.port, () =>{
-    
-});
-*/
-
 
 const server_port = normalizePort(String(config.server.port));
 server.set("port", server_port);
