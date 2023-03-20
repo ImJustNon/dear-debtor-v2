@@ -1,3 +1,5 @@
+const http = require("http");
+const createError = require('http-errors');
 const express = require("express");
 const server = express();
 
@@ -10,6 +12,7 @@ const useragent = require('express-useragent');
 const chalk = require("chalk");
 const mysql = require("mysql2");
 const bodyparser = require("body-parser");
+
 
 const urlencoded = bodyparser.urlencoded({
     limit: "50mb",
@@ -31,20 +34,6 @@ server.use(express.json({
 server.use(urlencoded);
 
 
-// catch 404 and forward to error handler
-server.use((req, res, next) =>{
-    next(createError(404));
-});
-// error handler
-server.use((err, req, res, next) =>{
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: req.app.get('env') === 'development' ? err : {},
-    });
-});
-
-
 // route loader
 fs.readdirSync("./routers").forEach(async files => {
     try {
@@ -60,8 +49,52 @@ fs.readdirSync("./routers").forEach(async files => {
 // database
 require("./database/connect.js").connect();
 
-
+/*
 server.listen(config.server.port, () =>{
+    
+});
+*/
+
+
+const server_port = normalizePort(String(config.server.port));
+server.set("port", server_port);
+
+const serv = http.createServer(server);
+serv.on("error", onError);
+serv.listen(server_port);
+serv.on("listening", async() =>{
     console.log(chalk.bold.cyanBright("[APP] ") + chalk.bold.whiteBright(`Localhost : http://${config.server.address}:${config.server.port}`));
     console.log(chalk.bold.cyanBright("[APP] ") + chalk.bold.whiteBright(`Listening on port : `) + chalk.bold.yellowBright(String(config.server.port)));
 });
+
+
+
+function normalizePort(val) {
+    let port = parseInt(val, 10);
+    if (isNaN(port)) {
+        return val;
+    }
+    if (port >= 0) {
+        return port;
+    }
+    return false;
+}
+
+function onError(error) {
+    if (error.syscall !== "listen") {
+        throw error;
+    }
+    let bind = typeof server_port === "string" ? "Pipe " + server_port : "Port " + server_port;
+    switch (error.code) {
+        case "EACCES":
+            console.error(bind + " requires elevated privileges");
+            process.exit(1);
+            break;
+        case "EADDRINUSE":
+            console.error(bind + " is already in use");
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
