@@ -93,6 +93,7 @@
         if(amountClickCount == 0){
             document.getElementById("amount").value = "";
             amountClickCount++;
+            console.log("[Debug] Remove {amount} default value when first click");
         }
     });
 </script>
@@ -100,11 +101,12 @@
 <script>
     // remove default value when first click (Description)
     let descriptionClickCount = 0;
-    document.getElementById("amount").value = "-";
+    document.getElementById("description").value = "-";
     document.getElementById("description").addEventListener("click",function(){
         if(descriptionClickCount == 0){
             document.getElementById("description").value = ""; 
             descriptionClickCount++;
+            console.log("[Debug] Remove {description} default value when first click");
         }
     });
 </script>
