@@ -1,13 +1,14 @@
+
 module.exports = {
     database: {
         mysql: {
-            host: 'us-east.connect.psdb.cloud',                                     
-            user: '615wwoqyj7wotlf60dzn',     
-            password: "pscale_pw_2UjUScPZH3AyISe3YWbNhVcdzW0D4kEwfHX7uwpCPVK",                                     
+            host: process.env.MYSQL_HOST || "",                                     
+            user: process.env.MYSQL_USER || "",     
+            password: process.env.MYSQL_PASSWORD || "",                                     
             port: 3306,                                             
-            database: 'myfirstdatabase',            
+            database: process.env.MYSQL_DATABASE || "",            
             ssl: {
-                rejectUnauthorized: true
+                rejectUnauthorized: true,
             },                               
                                  
         },
