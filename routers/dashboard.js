@@ -1,19 +1,26 @@
 const express = require("express");
 const router = express.Router();
+const moment = require('moment-timezone');
 const connection = require("../database/connect.js").connection;
 const { get_ip } = require("../utils/get_ip.js");
+
 
 router.get("/", async(req, res) =>{
 
     let auth = await auth_check(req);
 
     connection.execute('SELECT * FROM dear_debtor', async(err, results, fields) =>{
+        results.sort((a, b) =>{ 
+            // sort by date
+            return convertToUnixTimestamp(b.id) - convertToUnixTimestamp(a.id);
+        });    
+        console.log(results);
         res.render("index.ejs", {
             page: "dashboard",
             platform: req.useragent,
             error: null,
             data: {
-                debtor: await results,
+                debtor: results,
                 debtor_name_list: array_instersection(results),
                 sum_amount: cal_all_amount(results),
                 auth: auth,
@@ -67,6 +74,23 @@ function cal_all_amount(result){
         cal = cal + parseFloat(x.amount);
     });
     return cal;
+}
+
+
+function convertToUnixTimestamp(date){
+    const dateStr = date; //4:56.53PM Monday 20th of March, 2023
+    const formatStr = 'h:mm.ssA dddd Do [of] MMMM, YYYY';
+
+    // Convert the date string to a Moment.js object
+    const momentObj = moment(dateStr, formatStr);
+
+    // Convert the moment object to UTC time
+    const utcMomentObj = momentObj.utc();
+
+    // Convert the UTC moment object to a Unix timestamp in milliseconds
+    const unixTimestamp = utcMomentObj.valueOf();
+
+    return unixTimestamp;
 }
 
 module.exports = router;
